@@ -3,12 +3,19 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAIFLz56iR-VFFqGoRQ7eQ9tj75CS0o9iE",
-  authDomain: "sientesegura.firebaseapp.com",
-  projectId: "sientesegura",
-  storageBucket: "sientesegura.appspot.com",
-  messagingSenderId: "1043701456326",
-  appId: "1:1043701456326:web:751598da4cb98eb63d66c7",
+  apiKey: "AIzaSyCETOk04LZEU2mBFU6ZuNsYVlzUSo3Gz08",
+
+  authDomain: "cidtec-praxis.firebaseapp.com",
+
+  projectId: "cidtec-praxis",
+
+  storageBucket: "cidtec-praxis.appspot.com",
+
+  messagingSenderId: "532697662029",
+
+  appId: "1:532697662029:web:bb76f015a6fa06c3719204",
+
+  measurementId: "G-81L13ZZTY9",
 };
 
 // Initialize Firebase

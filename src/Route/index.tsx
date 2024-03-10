@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Auth/Login";
@@ -12,6 +11,7 @@ import Instagram from "../Component/Pages/Instagram/Instagram";
 import Amazon from "../Component/Pages/Amazon/Amazon";
 import BookMyShow from "../Component/Pages/BookMyShow/BookMyShow";
 import Whatsapp from "../Component/Pages/Whatsapp/Whatsapp";
+import Person from "../Component/Pages/Person/Person";
 
 const routes = createBrowserRouter([
   {
@@ -62,6 +62,10 @@ const routes = createBrowserRouter([
       {
         path: "whatsapp",
         element: <Whatsapp />,
+      },
+      {
+        path: "titular",
+        element: <Person />,
       },
     ],
   },

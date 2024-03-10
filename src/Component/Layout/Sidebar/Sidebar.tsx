@@ -1,15 +1,16 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
   const SIDEBAR_TABS = [
-    { name: "Netflix", path: "/netflix" },
+    { name: "Titular", path: "/titular" },
     { name: "Instagram", path: "/instagram" },
     { name: "Amazon", path: "/amazon" },
     { name: "Book my show", path: "/bookmyshow" },
     { name: "Whatsapp", path: "/whatsapp" },
+    { name: "Netflix", path: "/netflix" },
+
   ];
 
   const handleTabClick = (path: string) => {
