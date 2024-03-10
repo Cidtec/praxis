@@ -3,18 +3,17 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyApsv2XLdwKtI0lddYvOghHvttIu2v11t4",
-  authDomain: "react-mania-899d8.firebaseapp.com",
-  projectId: "react-mania-899d8",
-  storageBucket: "react-mania-899d8.appspot.com",
-  messagingSenderId: "765882448893",
-  appId: "1:765882448893:web:5b7c11c211887417473794",
-  measurementId: "G-5QJGCD3DV1",
+  apiKey: "AIzaSyAIFLz56iR-VFFqGoRQ7eQ9tj75CS0o9iE",
+  authDomain: "sientesegura.firebaseapp.com",
+  projectId: "sientesegura",
+  storageBucket: "sientesegura.appspot.com",
+  messagingSenderId: "1043701456326",
+  appId: "1:1043701456326:web:751598da4cb98eb63d66c7",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+/* const analytics = getAnalytics(app); */
 const auth = getAuth(app);
 
-export { app, analytics, auth };
+export { app, auth };

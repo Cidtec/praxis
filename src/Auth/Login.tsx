@@ -9,11 +9,24 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../Helpers/Firebase";
+//validations
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schemaLogin } from "./Validations/Validations";
+import { LoginDTO } from "./Dtos/login";
+import Input from "../Global/components/input";
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginDTO>({
+    resolver: zodResolver(schemaLogin),
+  });
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [loader, setLoader] = useState(false);
   const [password, setPassword] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -29,30 +42,20 @@ function Login() {
     return unsubscribe;
   }, []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (data: LoginDTO) => {
     setLoader(true);
-    e.preventDefault();
-    if (!validateEmail(email)) {
-      setError("Invalid email");
-      setLoader(false);
-      return;
-    }
-    if (!validatePassword(password)) {
-      setError(
-        "Password must be at least 8 characters long and contain at least 1 lowercase letter, 1 uppercase letter, 1 digit, and 1 special character"
-      );
-      setLoader(false);
-      return;
-    }
-    try {
+    console.log(data);
+    setLoader(false);
+
+    /*    try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       const token = await user.getIdToken();
       localStorage.setItem("token", token);
       navigate("/dashboard");
       setLoader(false);
     } catch (err: any) {
-      CommonError(error);
-    }
+      console.log(error);
+    } */
   };
 
   const handleGoogleLogin = async () => {
@@ -65,23 +68,8 @@ function Login() {
       navigate("/dashboard");
       setLoader(false);
     } catch (error: any) {
-      CommonError(error);
+      console.log(error);
     }
-  };
-
-  const CommonError = (err: any) => {
-    setError(err.message);
-    setLoader(false);
-  };
-
-  const validateEmail = (email: string) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
-
-  const validatePassword = (password: string) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
-    return re.test(password);
   };
 
   return (
@@ -196,57 +184,50 @@ function Login() {
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              {error && <span className="mt-10 text-red-600">{error}</span>}
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
-                <div>
+              <form
+                onSubmit={handleSubmit(handleLogin)}
+                className="space-y-4 md:space-y-6"
+                action="#"
+              >
+                {/*        <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your email
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
+                    {...register("gmail")}
                   />
-                </div>
+                  {errors.gmail && (
+                    <p className="text-red-600">{errors.gmail.message}</p>
+                  )}
+                </div> */}
+                <Input
+                error={errors.gmail}
+                placeholder="name@gmail.com"
+                label="Tu email"
+                register={register("gmail")}
+                
+                />
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Password
                   </label>
                   <input
                     type="password"
-                    name="password"
-                    id="password"
                     placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    {...register("password")}
                   />
+                  {errors.password && (
+                    <p className="text-red-600">{errors.password.message}</p>
+                  )}
                 </div>
                 <div className="flex items-center justify-between">
-                  {/* <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label className="text-gray-500 dark:text-gray-300">
-                        Remember me
-                      </label>
-                    </div>
-                  </div> */}
                   <a
                     onClick={() => navigate("/forgotpassword")}
                     className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer"
@@ -257,7 +238,6 @@ function Login() {
                 {!loader ? (
                   <button
                     type="submit"
-                    onClick={(e) => handleLogin(e)}
                     className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
                     Sign in
@@ -336,83 +316,6 @@ function Login() {
                   </p>
                 )}
               </button>
-              {/* <div className="flex items-center w-full">
-                <p> ------ or ------</p>
-              </div>
-              <div className="flex items-center w-full">
-                <div className="grid grid-cols-4 gap-4">
-                  <button
-                    aria-label="Continue with google"
-                    role="button"
-                    className=" py-3.5 px-4 rounded-lg  flex items-center w-full"
-                  >
-                    <svg
-                      width="48"
-                      height="48"
-                      viewBox="0 0 48 48"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M6.74679 7.32698C6.81572 6.97016 7.11946 6.70305 7.48791 6.67524L16.3927 6.00308C17.2586 5.93772 18.0255 6.5486 18.1399 7.39469L19.1989 15.2289C19.266 15.7252 19.0941 16.2238 18.734 16.5778L15.249 20.003C14.6101 20.631 14.6101 21.6492 15.249 22.2773L26.0703 32.9129C26.7093 33.541 27.7452 33.541 28.3842 32.9129L31.9155 29.4422C32.2491 29.1143 32.7106 28.9439 33.1815 28.9748L40.4744 29.4535C41.3402 29.5104 42.0103 30.2216 42.0014 31.0745L41.9038 40.4946C41.8998 40.8786 41.6201 41.2063 41.236 41.2768C31.653 43.0365 21.353 41.8809 13.7437 34.4021C6.12265 26.9117 4.92626 16.7508 6.74679 7.32698Z"
-                        stroke="black"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    aria-label="Continue with google"
-                    role="button"
-                    className=" py-3.5 px-4 rounded-lg  flex items-center w-full"
-                  >
-                    <svg
-                      width="48"
-                      height="48"
-                      viewBox="0 0 48 48"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clipPath="url(#clip0_17_24)">
-                        <path
-                          d="M48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 35.9789 8.77641 45.908 20.25 47.7084V30.9375H14.1562V24H20.25V18.7125C20.25 12.6975 23.8331 9.375 29.3152 9.375C31.9402 9.375 34.6875 9.84375 34.6875 9.84375V15.75H31.6613C28.68 15.75 27.75 17.6002 27.75 19.5V24H34.4062L33.3422 30.9375H27.75V47.7084C39.2236 45.908 48 35.9789 48 24Z"
-                          fill="#1877F2"
-                        />
-                        <path
-                          d="M33.3422 30.9375L34.4062 24H27.75V19.5C27.75 17.602 28.68 15.75 31.6613 15.75H34.6875V9.84375C34.6875 9.84375 31.9411 9.375 29.3152 9.375C23.8331 9.375 20.25 12.6975 20.25 18.7125V24H14.1562V30.9375H20.25V47.7084C22.7349 48.0972 25.2651 48.0972 27.75 47.7084V30.9375H33.3422Z"
-                          fill="white"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_17_24">
-                          <rect width="48" height="48" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </button>
-                  <button
-                    aria-label="Continue with google"
-                    role="button"
-                    className=" py-3.5 px-4 rounded-lg  flex items-center w-full"
-                  >
-                    <svg
-                      width="48"
-                      height="48"
-                      viewBox="0 0 48 48"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M15.095 43.5014C33.2083 43.5014 43.1155 28.4946 43.1155 15.4809C43.1155 15.0546 43.1155 14.6303 43.0867 14.2079C45.0141 12.8138 46.6778 11.0877 48 9.11033C46.2028 9.90713 44.2961 10.4294 42.3437 10.6598C44.3996 9.42915 45.9383 7.49333 46.6733 5.21273C44.7402 6.35994 42.6253 7.16838 40.4198 7.60313C38.935 6.02428 36.9712 4.97881 34.8324 4.6285C32.6935 4.27818 30.4988 4.64256 28.5879 5.66523C26.677 6.68791 25.1564 8.31187 24.2615 10.2858C23.3665 12.2598 23.1471 14.4737 23.6371 16.5849C19.7218 16.3885 15.8915 15.371 12.3949 13.5983C8.89831 11.8257 5.81353 9.33765 3.3408 6.29561C2.08146 8.4636 1.69574 11.0301 2.2622 13.4725C2.82865 15.9148 4.30468 18.0495 6.38976 19.4418C4.82246 19.3959 3.2893 18.9731 1.92 18.2092V18.334C1.92062 20.6077 2.7077 22.8112 4.14774 24.5707C5.58778 26.3303 7.59212 27.5375 9.8208 27.9878C8.37096 28.3832 6.84975 28.441 5.37408 28.1567C6.00363 30.1134 7.22886 31.8244 8.87848 33.0506C10.5281 34.2768 12.5197 34.9569 14.5747 34.9958C12.5329 36.6007 10.1946 37.7873 7.69375 38.4878C5.19287 39.1882 2.57843 39.3886 0 39.0777C4.50367 41.9677 9.74385 43.5007 15.095 43.4937"
-                        fill="#1DA1F2"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>
