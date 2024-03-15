@@ -34,8 +34,8 @@ export default function Landing() {
   const navigate = useNavigate();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const handleLoginClick = () => {
-    navigate("/login");
+  const handleRedirect = (url:string) => {
+    navigate("/"+url);
   };
 
   return (
@@ -73,10 +73,10 @@ export default function Landing() {
             </Link>
           </nav>
           <div className="flex items-center space-x-4">
-            <Link className="text-gray-500 transition-colors hover:underline dark:hover:text-gray-50" to="#">
+            <Link className="text-gray-500 transition-colors hover:underline dark:hover:text-gray-50" to="/login">
               Sign in
             </Link>
-            <Link className="text-gray-500 transition-colors hover:underline dark:hover:text-gray-50" to="#">
+            <Link className="text-gray-500 transition-colors hover:underline dark:hover:text-gray-50" to="/signup">
               Sign up
             </Link>
           </div>
