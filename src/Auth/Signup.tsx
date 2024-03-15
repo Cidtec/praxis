@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import React, { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ import Input from "../Global/components/input";
 import BtnForm from "../Global/components/BtnForm";
 import BtnLoader from "../Global/components/BtnLoader";
 import BtnRedirect from "../Global/components/BtnRedirect";
+import toast from "react-hot-toast";
 
 function Signup() {
   const navigate = useNavigate();
@@ -43,8 +45,6 @@ function Signup() {
   }, []);
 
 
-
-
   let msgBtnForm = "Crear usuario";
   const handleSignup = async (e: React.FormEvent) => {
     try {
@@ -53,8 +53,16 @@ function Signup() {
         getValues().email,
         getValues().password
       );
-      
-      navigate("/login");
+      const { user } = await signInWithEmailAndPassword(
+        auth,
+        getValues().email,
+        getValues().password
+      );
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
+      toast.success("Bienvenido");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      navigate("/dashboard");
       setLoader(false);
     } catch (err: any) {
       setError(err.message);
@@ -62,15 +70,7 @@ function Signup() {
     }
   };
 
-  const validateEmail = (email: string) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  };
 
-  const validatePassword = (password: string) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
-    return re.test(password);
-  };
   const handleGoogleLogin = async () => {
     setLoader(true);
     const provider = new GoogleAuthProvider();
