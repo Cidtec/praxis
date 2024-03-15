@@ -21,7 +21,9 @@ const UseModal = () => {
         onClick={handleCloseModal}
       >
         <div
-          className="relative bg-white rounded-lg p-6"
+          className="relative bg-white rounded-lg p-6 overflow-auto " style={{
+            maxHeight:"80%"
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {children}

@@ -1,29 +1,29 @@
 import { ReactNode } from "react";
 
-interface Props {
-  bodyTableJSX(children: () => JSX.Element): ReactNode;
+interface Props<T> {
+  bodyTableJSX(children:(row:T) => JSX.Element): ReactNode;
   columnsTable: string[];
-  handleEdit: () => void;
-  handleDelete: () => void;
+  handleEdit: (row:T) => void;
+  handleDelete: (row:T) => void;
 }
-const TableComponent = ({
+const TableComponent =<T,> ({
   bodyTableJSX,
   columnsTable,
   handleDelete,
   handleEdit,
-}: Props) => {
-  function ActionsJSX() {
+}: Props <T>) => {
+  function ActionsJSX(row: T) {
     return (
       <td className="px-6 py-4 whitespace-nowrap">
         <button
           className="text-blue-500 hover:text-blue-700"
-          onClick={() => handleEdit()}
+          onClick={() => handleEdit(row)}
         >
           Edit
         </button>
         <button
           className="ml-4 text-red-500 hover:text-red-700"
-          onClick={() => handleDelete()}
+          onClick={() => handleDelete(row)}
         >
           Delete
         </button>
@@ -50,7 +50,7 @@ const TableComponent = ({
       </thead>
 
       <tbody className="bg-white divide-y divide-gray-200">
-        {bodyTableJSX(() => ActionsJSX())}
+        {bodyTableJSX((row) => ActionsJSX(row))}
       </tbody>
     </table>
   );
