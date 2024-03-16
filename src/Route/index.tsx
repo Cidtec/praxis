@@ -7,11 +7,13 @@ import MobileNumberLogin from "../Auth/MobileNumberLogin";
 import DefaultLayout from "../Layout/DefaultLayout";
 import Dashboard from "../Component/Pages/Dashboard/Dashboard";
 import NotFound from "../Component/Pages/NotFound/NotFound";
-import Instagram from "../Component/Pages/Instagram/Instagram";
-import Amazon from "../Component/Pages/Amazon/Amazon";
+import Instagram from "../Component/Pages/ExamenHemograma/ExamenHemograma";
+import Amazon from "../Component/Pages/ExamenFisico/ExamenFisico";
 import BookMyShow from "../Component/Pages/BookMyShow/BookMyShow";
 import Whatsapp from "../Component/Pages/Whatsapp/Whatsapp";
 import Person from "../Component/Pages/Person/Person";
+import ExamenHemograma from "../Component/Pages/ExamenHemograma/ExamenHemograma";
+import ExamenFisico from "../Component/Pages/ExamenFisico/ExamenFisico";
 
 const routes = createBrowserRouter([
   {
@@ -48,12 +50,12 @@ const routes = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: "instagram",
-        element: <Instagram />,
+        path: "examenHemograma",
+        element: <ExamenHemograma />,
       },
       {
-        path: "amazon",
-        element: <Amazon />,
+        path: "examenFisico",
+        element: <ExamenFisico />,
       },
       {
         path: "bookmyshow",

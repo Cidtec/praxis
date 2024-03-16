@@ -35,8 +35,8 @@ export default function Landing() {
   const navigate = useNavigate();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const handleLoginClick = () => {
-    navigate("/login");
+  const handleRedirect = (url:string) => {
+    navigate("/"+url);
   };
 
   return (

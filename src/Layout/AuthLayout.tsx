@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 const AuthLayout = () => {
   const navigate = useNavigate();
   const token: any = localStorage.getItem("token");
-  console.log("token", token);
-
   return (
     <>
       {" "}

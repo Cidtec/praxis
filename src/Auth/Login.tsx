@@ -14,17 +14,26 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schemaLogin } from "./Validations/Validations";
 import { LoginDTO } from "./Dtos/login";
-import Input from "../Global/components/Input";
+import Input from "../Global/components/input";
 import BtnRedirect from "../Global/components/BtnRedirect";
 import BtnForm from "../Global/components/BtnForm";
 import FormComponent from "../Global/components/Form";
 import BtnLoader from "../Global/components/BtnLoader";
+//import Notification from "../Global/components/Notification";
+
+//import { notifySuccess } from "../Global/components/Notification";
+import Notification, {
+  showSuccessNotification,
+} from "../Global/components/Notification";
+
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<LoginDTO>({
     resolver: zodResolver(schemaLogin),
   });
@@ -50,18 +59,29 @@ function Login() {
 
   const handleLogin = async (data: LoginDTO) => {
     setLoader(true);
-    console.log(data);
-    setLoader(false);
-
-    /*    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
+    try {
+      const { user } = await signInWithEmailAndPassword(
+        auth,
+        getValues().email,
+        getValues().password
+      );
       const token = await user.getIdToken();
       localStorage.setItem("token", token);
+      toast.success("Bienvenido");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       navigate("/dashboard");
+
       setLoader(false);
-    } catch (err: any) {
+    } catch (error: any) {
       console.log(error);
-    } */
+      if (error.code == "auth/invalid-credential") {
+        toast.error("Credenciales invalidas");
+      } else {
+        toast.error(error.message);
+      }
+      setLoader(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -187,7 +207,7 @@ function Login() {
             </g>
           </svg>
           <a className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            React Mania
+            PRAXIS
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <FormComponent
@@ -196,16 +216,16 @@ function Login() {
               title="Iniciar sesion"
             >
               <Input
-                error={errors.gmail}
+                error={errors.email}
                 placeholder="name@gmail.com"
-                label="Tu email"
-                register={register("gmail")}
-                type="gmail"
+                label="Email"
+                register={register("email")}
+                type="email"
               />
               <Input
                 error={errors.password}
                 placeholder="Password"
-                label="Tu contraseña"
+                label="Contraseña"
                 register={register("password")}
                 type="password"
               />
@@ -213,6 +233,7 @@ function Login() {
                 onClick={() => navigate("/forgotpassword")}
                 txt="Olvidaste tu contraseña?"
               />
+              <Toaster position="top-right" />
               {!loader ? (
                 <BtnForm msg={msgBtnForm} />
               ) : (
@@ -224,7 +245,7 @@ function Login() {
                 </p>
                 <BtnRedirect
                   onClick={() => navigate("/signup")}
-                  txt="Sign up"
+                  txt="Crear usuario"
                 />
               </p>
 
