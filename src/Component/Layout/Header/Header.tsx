@@ -62,9 +62,7 @@ const SIDEBAR_TABS = [
   { name: "Titular", path: "/titular" },
   { name: "Examen Hemograma", path: "/examenHemograma"},
   { name: "Examen Fisico", path: "/examenFisico" },
-  { name: "Book my show", path: "/bookmyshow" },
-  { name: "Whatsapp", path: "/whatsapp" },
-  { name: "Netflix", path: "/netflix" },
+ 
 ];
 
 const Header = () => {
