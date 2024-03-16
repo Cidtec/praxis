@@ -70,8 +70,9 @@ const ExamenHemograma = () => {
         toast.error("Error al actualizar");
       }
     }
-    setSelect(emptyExamData)
+    
     handleCloseModal();
+    setSelect(emptyExamData)
     handleGetData();
   };
   const columnsTable = [
@@ -140,7 +141,7 @@ const ExamenHemograma = () => {
         <Toaster position="top-right" />
         <BtnBasic
           onClick={() => {
-            //setSelect(emptyPerson)
+            setSelect(null)
             handleOpenModal();
           }}
           txt="Crear datos"
@@ -150,7 +151,7 @@ const ExamenHemograma = () => {
             <FormComponent
               handleForm={handleForm}
               handleSubmit={handleSubmit}
-              title="Crear titular"
+              title="Crear examen"
             >
               <Input
                 error={errors.RX}

@@ -49,9 +49,9 @@ export default function Landing() {
           <li>Facility</li>
           <li>About</li>
         </ul>
-        <button className="border border-white px-12 py-2 rounded-md text-white">
+        <Link to="/login" className="border border-white px-12 py-2 rounded-md text-white">
           Login
-        </button>
+        </Link>
       </header>
       <main className="flex-col">
         <section className="h-screen flex">

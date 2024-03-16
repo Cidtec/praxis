@@ -65,6 +65,7 @@ const Person = () => {
 
   const ownerCollection = collection(db, "Titular");
   const handleForm = async (data: PersonDTO) => {
+    console.log(data)
     if (!select) {
       const response = await addDoc(ownerCollection, data);
       if (response) {
@@ -112,6 +113,7 @@ const Person = () => {
       const data = await getDocs(ownerCollection);
       const ownersData: PersonDTO[] = data.docs.map((doc) => {
         const docData = doc.data() as PersonDTO; // Datos del documento de Firebase
+        
         return {
           ...docData,
           id: doc.id,
@@ -128,11 +130,13 @@ const Person = () => {
     handleGetData();
   }, []);
 
+
   function bodyTableJSX(children: (row: PersonDTO) => JSX.Element) {
+    console.log(owners)
     return (
       <>
-        {owners.map((owner) => (
-          <tr key={owner.id}>
+        {owners.length>0 && owners.map((owner) => (
+          <tr key={owner.apellidoPaterno}>
             <td className="px-6 py-4 whitespace-nowrap">{owner.nombres}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               {owner.apellidoMaterno}
@@ -176,7 +180,7 @@ const Person = () => {
         <Toaster position="top-right" />
         <BtnBasic
           onClick={() => {
-            //setSelect(emptyPerson)
+            setSelect(null)
             handleOpenModal();
           }}
           txt="Crear datos"

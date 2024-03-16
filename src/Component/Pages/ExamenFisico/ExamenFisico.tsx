@@ -50,6 +50,7 @@ const ExamenFisico = () => {
 
   const examFisicoCollection = collection(db, "Examen_Fisico");
   const handleForm = async (data: ExamFisicoDTO) => {
+    console.log(data)
     if (!select) {
       const response = await addDoc(examFisicoCollection, data);
       if (response) {
@@ -116,7 +117,7 @@ const ExamenFisico = () => {
         <Toaster position="top-right" />
         <BtnBasic
           onClick={() => {
-            //setSelect(emptyPerson)
+            setSelect(null)
             handleOpenModal();
           }}
           txt="Crear datos"
@@ -126,7 +127,7 @@ const ExamenFisico = () => {
             <FormComponent
               handleForm={handleForm}
               handleSubmit={handleSubmit}
-              title="Crear titular"
+              title="Crear Examen"
             >
               <Input
                 error={errors.Olor}
