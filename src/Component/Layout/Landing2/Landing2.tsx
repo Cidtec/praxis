@@ -1,11 +1,12 @@
+import AboutUs from "./Components/AboutUs";
 import HeaderComp from "./Components/header";
-
 
 const Landing = () => {
   return (
-    <>
-     <HeaderComp />
-    </>
+    <div className="bg-first">
+      <HeaderComp />
+      <AboutUs />
+    </div>
   );
 };
 

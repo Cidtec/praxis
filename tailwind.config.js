@@ -11,6 +11,7 @@ export default {
         fourth:"#e1bc29",
         fifth:"#3bb273",
         sixth:"#7768ae",
+        seventh:"#4d9de0",
         primary: {
           50: "#eff6ff",
           100: "#dbeafe",
