@@ -5,6 +5,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        first: "#fff3da",
+        second:"#7768ae",
+        third:"#e15554",
+        fourth:"#e1bc29",
+        fifth:"#3bb273",
+        sixth:"#7768ae",
         primary: {
           50: "#eff6ff",
           100: "#dbeafe",
