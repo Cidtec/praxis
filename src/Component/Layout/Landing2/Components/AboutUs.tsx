@@ -1,26 +1,18 @@
 import Img from "../../../../assets/landing/AboutUs.png";
+import BackgroundRight from "./BackgroundRight";
+import BackgroundLeft from "./BackgroundLeft";
 
 const AboutUs = () => {
   return (
     <>
       <div className="flex flex-row justify-center items-center gap-5">
-        <div className="flex flex-col gap-3">
-          <span className="bg-fourth block h-6 w-72 rounded-full self-end"></span>
-          <span className="bg-third block h-6 w-64 rounded-full self-end"></span>
-          <span className="bg-seventh block h-6 w-60 rounded-full self-end"></span>
-        </div>
-
+        <BackgroundLeft />
         <div className="w-96 ">
           <h4 className="text-3xl font-medium tracking-tight leading-tight">
             Infórmate y cuida de tu salud en un solo clíck con MEDULA.
           </h4>
         </div>
-
-        <div className="flex flex-col gap-5">
-          <span className="bg-fourth block h-6 w-72 rounded-full"></span>
-          <span className="bg-third block h-6 w-64 rounded-full"></span>
-          <span className="bg-seventh block h-6 w-60 rounded-full"></span>
-        </div>
+        <BackgroundRight />
       </div>
 
       <section className="flex justify-around items-center">

@@ -1,4 +1,5 @@
 import AboutUs from "./Components/AboutUs";
+import Types from "./Components/Types";
 import HeaderComp from "./Components/header";
 
 const Landing = () => {
@@ -6,6 +7,7 @@ const Landing = () => {
     <div className="bg-first">
       <HeaderComp />
       <AboutUs />
+      <Types />
     </div>
   );
 };
