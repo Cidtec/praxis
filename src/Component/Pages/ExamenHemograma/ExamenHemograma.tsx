@@ -19,6 +19,7 @@ import BtnForm from "../../../Global/components/BtnForm";
 import TableComponent from "../../../Global/components/Table";
 import { schemaCreateExamHemograma } from "./Validations/FormCreateExamHemograma";
 import { zodResolver } from "@hookform/resolvers/zod";
+import OutletLayout from "../../../Layout/OutletLayout";
 const emptyExamData: ExamHemogramaDTO = {
   id: "",
   RX: "",
@@ -36,16 +37,17 @@ const emptyExamData: ExamHemogramaDTO = {
 const ExamenHemograma = () => {
   const { handleCloseModal, handleOpenModal, ShowModalJSX } = UseModal();
   const [select, setSelect] = useState<ExamHemogramaDTO | null>(null);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     reset,
   } = useForm<ExamHemogramaDTO>({
     resolver: zodResolver(schemaCreateExamHemograma),
     //defaultValues:emptyPerson,
   });
+
   useEffect(() => {
     reset(select || emptyExamData);
   }, [select]);
@@ -70,9 +72,9 @@ const ExamenHemograma = () => {
         toast.error("Error al actualizar");
       }
     }
-    
+
     handleCloseModal();
-    setSelect(emptyExamData)
+    setSelect(emptyExamData);
     handleGetData();
   };
   const columnsTable = [
@@ -90,6 +92,7 @@ const ExamenHemograma = () => {
 
   const handleGetData = async () => {
     try {
+      setLoading(true);
       const data = await getDocs(examHemogramaCollection);
       const examData: ExamHemogramaDTO[] = data.docs.map((doc) => {
         const docData = doc.data() as ExamHemogramaDTO; // Datos del documento de Firebase
@@ -102,6 +105,8 @@ const ExamenHemograma = () => {
       setExamData(examData);
     } catch (error) {
       console.error("Error al obtener datos:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -112,7 +117,7 @@ const ExamenHemograma = () => {
     return (
       <>
         {examData.map((examData) => (
-          <tr key={examData.id}>
+          <tr className="even:bg-white odd:bg-[#f5f5f5]" key={examData.id}>
             <td className="px-6 py-4 whitespace-nowrap">{examData.RX}</td>
             <td className="px-6 py-4 whitespace-nowrap">{examData.ECG}</td>
             <td className="px-6 py-4 whitespace-nowrap">{examData.PAP}</td>
@@ -136,99 +141,14 @@ const ExamenHemograma = () => {
     );
   }
   return (
-    <>
-      <div>
-        <Toaster position="top-right" />
-        <BtnBasic
-          onClick={() => {
-            setSelect(null)
-            handleOpenModal();
-          }}
-          txt="Crear datos"
-        />
-        {ShowModalJSX(
-          <>
-            <FormComponent
-              handleForm={handleForm}
-              handleSubmit={handleSubmit}
-              title="Crear examen"
-            >
-              <Input
-                error={errors.RX}
-                label="RX"
-                placeholder="Ingrese RX"
-                register={register("RX")}
-                type="text"
-              />
-              <Input
-                error={errors.ECG}
-                label="ECG"
-                placeholder="Ingrese ECG"
-                register={register("ECG")}
-                type="text"
-              />
-              <Input
-                error={errors.PAP}
-                label="PAP"
-                placeholder="Ingrese PAP"
-                register={register("PAP")}
-                type="text"
-              />
-              <Input
-                error={errors.GR}
-                label="GR"
-                placeholder="Ingrese GR"
-                register={register("GR")}
-                type="text"
-              />
-              <Input
-                error={errors.GB}
-                label="GB"
-                placeholder="Ingrese GB"
-                register={register("GB")}
-                type="text"
-              />
-              <Input
-                error={errors.HB}
-                label="Hb"
-                placeholder="Ingrese Hb"
-                register={register("HB")}
-                type="text"
-              />
-              <Input
-                error={errors.Plaquetas}
-                label="Plaquetas"
-                placeholder="Ingrese Plaquetas"
-                register={register("Plaquetas")}
-                type="text"
-              />
-              <Input
-                error={errors.Glicemia}
-                label="Glicemia"
-                placeholder="Ingrese Glicemia"
-                register={register("Glicemia")}
-                type="text"
-              />
-              <Input
-                error={errors.Colesterol}
-                label="Colesterol"
-                placeholder="Ingrese Colesterol"
-                register={register("Colesterol")}
-                type="text"
-              />
-              <Input
-                error={errors.Trigliceridos}
-                label="Trigliceridos"
-                placeholder="Ingrese Trigliceridos"
-                register={register("Trigliceridos")}
-                type="text"
-              />
-              <BtnForm msg={select?.id ? "Editar Examen" : "Crear Examen"} />
-            </FormComponent>
-          </>
-        )}
-      </div>
+    <OutletLayout
+      onCreate={() => {
+        setSelect(null);
+        handleOpenModal();
+      }}
+    >
       <TableComponent<ExamHemogramaDTO>
+        loading={loading}
         columnsTable={columnsTable}
         bodyTableJSX={bodyTableJSX}
         handleDelete={async (row) => {
@@ -247,7 +167,88 @@ const ExamenHemograma = () => {
           handleOpenModal();
         }}
       />
-    </>
+      {ShowModalJSX(
+        <>
+          <FormComponent
+            handleForm={handleForm}
+            handleSubmit={handleSubmit}
+            title="Crear examen"
+          >
+            <Input
+              error={errors.RX}
+              label="RX"
+              placeholder="Ingrese RX"
+              register={register("RX")}
+              type="text"
+            />
+            <Input
+              error={errors.ECG}
+              label="ECG"
+              placeholder="Ingrese ECG"
+              register={register("ECG")}
+              type="text"
+            />
+            <Input
+              error={errors.PAP}
+              label="PAP"
+              placeholder="Ingrese PAP"
+              register={register("PAP")}
+              type="text"
+            />
+            <Input
+              error={errors.GR}
+              label="GR"
+              placeholder="Ingrese GR"
+              register={register("GR")}
+              type="text"
+            />
+            <Input
+              error={errors.GB}
+              label="GB"
+              placeholder="Ingrese GB"
+              register={register("GB")}
+              type="text"
+            />
+            <Input
+              error={errors.HB}
+              label="Hb"
+              placeholder="Ingrese Hb"
+              register={register("HB")}
+              type="text"
+            />
+            <Input
+              error={errors.Plaquetas}
+              label="Plaquetas"
+              placeholder="Ingrese Plaquetas"
+              register={register("Plaquetas")}
+              type="text"
+            />
+            <Input
+              error={errors.Glicemia}
+              label="Glicemia"
+              placeholder="Ingrese Glicemia"
+              register={register("Glicemia")}
+              type="text"
+            />
+            <Input
+              error={errors.Colesterol}
+              label="Colesterol"
+              placeholder="Ingrese Colesterol"
+              register={register("Colesterol")}
+              type="text"
+            />
+            <Input
+              error={errors.Trigliceridos}
+              label="Trigliceridos"
+              placeholder="Ingrese Trigliceridos"
+              register={register("Trigliceridos")}
+              type="text"
+            />
+            <BtnForm msg={select?.id ? "Editar Examen" : "Crear Examen"} />
+          </FormComponent>
+        </>
+      )}
+    </OutletLayout>
   );
 };
 

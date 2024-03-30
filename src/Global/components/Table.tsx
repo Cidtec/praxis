@@ -1,17 +1,23 @@
 import { ReactNode } from "react";
+import { useSidebarContext } from "../../Layout/DefaultLayoutContext";
+import Loader from "./Loader/Loader";
 
 interface Props<T> {
-  bodyTableJSX(children:(row:T) => JSX.Element): ReactNode;
+  loading?: boolean;
+  bodyTableJSX(children: (row: T) => JSX.Element): ReactNode;
   columnsTable: string[];
-  handleEdit: (row:T) => void;
-  handleDelete: (row:T) => void;
+  handleEdit: (row: T) => void;
+  handleDelete: (row: T) => void;
 }
-const TableComponent =<T,> ({
+const TableComponent = <T,>({
+  loading,
   bodyTableJSX,
   columnsTable,
   handleDelete,
   handleEdit,
-}: Props <T>) => {
+}: Props<T>) => {
+  const { active } = useSidebarContext();
+
   function ActionsJSX(row: T) {
     return (
       <td className="px-6 py-4 whitespace-nowrap">
@@ -31,28 +37,37 @@ const TableComponent =<T,> ({
     );
   }
 
-  return (
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          {columnsTable.map((column, index) => (
-            <th
-              key={index}
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              {column}
-            </th>
-          ))}
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Operations
-          </th>
-        </tr>
-      </thead>
+  const thClasses = [
+    "px-6 py-3 text-left text-xs font-black uppercase tracking-wider whitespace-nowrap",
+  ];
+  thClasses.push(active.color.text);
 
-      <tbody className="bg-white divide-y divide-gray-200">
-        {bodyTableJSX((row) => ActionsJSX(row))}
-      </tbody>
-    </table>
+  const bodyClasses = ["bg-white divide-y"];
+  bodyClasses.push(active.color.divide);
+
+  return (
+    <div className="w-full overflow-auto flex-1 bg-white rounded-lg">
+      {loading ? (
+        <Loader color={active.color.text} />
+      ) : (
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50 sticky top-0">
+            <tr className={active.color.bg_light}>
+              {columnsTable.map((column, index) => (
+                <th key={index} className={thClasses.join(" ")}>
+                  {column}
+                </th>
+              ))}
+              <th className={thClasses.join(" ")}>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody className={bodyClasses.join(" ")}>
+            {bodyTableJSX((row) => ActionsJSX(row))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 

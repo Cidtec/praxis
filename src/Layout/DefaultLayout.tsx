@@ -1,25 +1,25 @@
-import React from "react";
 import Sidebar from "../Component/Layout/Sidebar/Sidebar";
-import Header from "../Component/Layout/Header/Header";
-import PageRoutes from "../Component/Layout/PageRoutes/PageRoutes";
 import { Navigate, Outlet } from "react-router-dom";
+import Navbar from "../Component/Layout/Landing2/Components/navbar";
+import { SidebarContext } from "./DefaultLayoutContext";
 
 function DefaultLayout() {
   const token: any = localStorage.getItem("token");
   return (
-    <>
+    <SidebarContext>
       {token ? (
-        <>
-          <Header />
-          <Sidebar />
-          <div className="p-4 sm:ml-64" style={{ marginTop: "120px" }}>
+        <div className="w-screen h-screen bg-first overflow-hidden">
+          <Navbar />
+          <Sidebar nav />
+          <div className="p-4 sm:ml-64 sm:mr-24 h-[calc(100%_-_80px)]">
             <Outlet />
           </div>
-        </>
+          <Sidebar />
+        </div>
       ) : (
         <Navigate to="/login" />
       )}
-    </>
+    </SidebarContext>
   );
 }
 

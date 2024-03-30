@@ -20,6 +20,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../Helpers/Firebase";
 import toast, { Toaster } from "react-hot-toast";
+import { useSidebarContext } from "../../../Layout/DefaultLayoutContext";
+import OutletLayout from "../../../Layout/OutletLayout";
 
 const emptyPerson: PersonDTO = {
   id: "",
@@ -45,6 +47,7 @@ const emptyPerson: PersonDTO = {
 const Person = () => {
   const { ShowModalJSX, handleCloseModal, handleOpenModal } = UseModal();
   const [select, setSelect] = useState<PersonDTO | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -65,7 +68,7 @@ const Person = () => {
 
   const ownerCollection = collection(db, "Titular");
   const handleForm = async (data: PersonDTO) => {
-    console.log(data)
+    console.log(data);
     if (!select) {
       const response = await addDoc(ownerCollection, data);
       if (response) {
@@ -77,12 +80,12 @@ const Person = () => {
       try {
         const Doc = doc(db, "Titular", select.id);
         await updateDoc(Doc, data as any);
-        toast.success("Usuario actualizado con exito")
+        toast.success("Usuario actualizado con exito");
       } catch (error) {
-        toast.error("Error al actualizar")
+        toast.error("Error al actualizar");
       }
     }
-    setSelect(emptyPerson)
+    setSelect(emptyPerson);
     handleCloseModal();
     handleGetData();
   };
@@ -110,10 +113,11 @@ const Person = () => {
 
   const handleGetData = async () => {
     try {
+      setLoading(true);
       const data = await getDocs(ownerCollection);
       const ownersData: PersonDTO[] = data.docs.map((doc) => {
         const docData = doc.data() as PersonDTO; // Datos del documento de Firebase
-        
+
         return {
           ...docData,
           id: doc.id,
@@ -123,6 +127,8 @@ const Person = () => {
       setOwners(ownersData);
     } catch (error) {
       console.error("Error al obtener datos:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -130,13 +136,11 @@ const Person = () => {
     handleGetData();
   }, []);
 
-
   function bodyTableJSX(children: (row: PersonDTO) => JSX.Element) {
-    console.log(owners)
     return (
       <>
-        {owners.length>0 && owners.map((owner) => (
-          <tr key={owner.apellidoPaterno}>
+        {owners.map((owner) => (
+          <tr className="even:bg-white odd:bg-[#f5f5f5]" key={owner.id}>
             <td className="px-6 py-4 whitespace-nowrap">{owner.nombres}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               {owner.apellidoMaterno}
@@ -175,174 +179,14 @@ const Person = () => {
   }
 
   return (
-    <>
-      <div>
-        <Toaster position="top-right" />
-        <BtnBasic
-          onClick={() => {
-            setSelect(null)
-            handleOpenModal();
-          }}
-          txt="Crear datos"
-        />
-        {ShowModalJSX(
-          <>
-            <FormComponent
-              handleForm={handleForm}
-              handleSubmit={handleSubmit}
-              title="Crear titular"
-            >
-              <Input
-                error={errors.nombres}
-                label="Nombre"
-                placeholder="Carlos"
-                register={register("nombres")}
-                type="text"
-              />
-
-              <Input
-                error={errors.apellidoPaterno}
-                label="Apellido Paterno"
-                placeholder="Villaroel"
-                register={register("apellidoPaterno")}
-                type="text"
-              />
-
-              <Input
-                error={errors.apellidoMaterno}
-                label="Apellido Materno"
-                placeholder="Salva"
-                register={register("apellidoMaterno")}
-                type="text"
-              />
-
-              <Input
-                error={errors.ciTitular}
-                label="C.I Titular"
-                placeholder="Carnet de Identidad"
-                register={register("ciTitular")}
-                type="text"
-              />
-
-              <Input
-                error={errors.codigoTitular}
-                label="Código Titular"
-                placeholder="Código"
-                register={register("codigoTitular")}
-                type="text"
-              />
-
-              <Input
-                error={errors.sexo}
-                label="Sexo"
-                placeholder="Sexo"
-                register={register("sexo")}
-                type="text"
-              />
-
-              <Input
-                error={errors.fechaIngresoRamo}
-                label="Fecha Ingreso Ramo"
-                placeholder="Fecha"
-                register={register("fechaIngresoRamo")}
-                type="text"
-              />
-
-              <Input
-                error={errors.fechaInclusion}
-                label="Fecha Inclusión"
-                placeholder="Fecha"
-                register={register("fechaInclusion")}
-                type="text"
-              />
-
-              <Input
-                error={errors.año}
-                label="Año"
-                placeholder="Año"
-                register={register("año")}
-                type="number"
-              />
-
-              <Input
-                error={errors.area}
-                label="Área"
-                placeholder="Área"
-                register={register("area")}
-                type="text"
-              />
-
-              <Input
-                error={errors.fechaNacimiento}
-                label="Fecha Nacimiento"
-                placeholder="Fecha"
-                register={register("fechaNacimiento")}
-                type="text"
-              />
-
-              <Input
-                error={errors.edadActual}
-                label="Edad Actual"
-                placeholder="Edad"
-                register={register("edadActual")}
-                type="number"
-              />
-
-              <Input
-                error={errors.ciudad}
-                label="Ciudad"
-                placeholder="Ciudad"
-                register={register("ciudad")}
-                type="text"
-              />
-
-              <Input
-                error={errors.peso}
-                label="Peso"
-                placeholder="Peso"
-                register={register("peso")}
-                type="number"
-              />
-
-              <Input
-                error={errors.talla}
-                label="Talla"
-                placeholder="Talla"
-                register={register("talla")}
-                type="number"
-              />
-
-              <Input
-                error={errors.imc}
-                label="IMC"
-                placeholder="IMC"
-                register={register("imc")}
-                type="number"
-              />
-
-              <Input
-                error={errors.pa}
-                label="PA"
-                placeholder="PA"
-                register={register("pa")}
-                type="text"
-              />
-
-              <Input
-                error={errors.saturacion}
-                label="Saturación"
-                placeholder="Saturación"
-                register={register("saturacion")}
-                type="number"
-              />
-
-              <BtnForm msg={select?.id ? "Editar titular" : "Crear titular"} />
-            </FormComponent>
-          </>
-        )}
-      </div>
-
+    <OutletLayout
+      onCreate={() => {
+        setSelect(null);
+        handleOpenModal();
+      }}
+    >
       <TableComponent<PersonDTO>
+        loading={loading}
         columnsTable={columnsTable}
         bodyTableJSX={bodyTableJSX}
         handleDelete={async (row) => {
@@ -353,7 +197,7 @@ const Person = () => {
           } catch (error) {
             toast.success("Error al eliminar");
           }
-        
+
           handleGetData();
         }}
         handleEdit={(row) => {
@@ -361,7 +205,162 @@ const Person = () => {
           handleOpenModal();
         }}
       />
-    </>
+      {ShowModalJSX(
+        <>
+          <FormComponent
+            handleForm={handleForm}
+            handleSubmit={handleSubmit}
+            title="Crear titular"
+          >
+            <Input
+              error={errors.nombres}
+              label="Nombre"
+              placeholder="Carlos"
+              register={register("nombres")}
+              type="text"
+            />
+
+            <Input
+              error={errors.apellidoPaterno}
+              label="Apellido Paterno"
+              placeholder="Villaroel"
+              register={register("apellidoPaterno")}
+              type="text"
+            />
+
+            <Input
+              error={errors.apellidoMaterno}
+              label="Apellido Materno"
+              placeholder="Salva"
+              register={register("apellidoMaterno")}
+              type="text"
+            />
+
+            <Input
+              error={errors.ciTitular}
+              label="C.I Titular"
+              placeholder="Carnet de Identidad"
+              register={register("ciTitular")}
+              type="text"
+            />
+
+            <Input
+              error={errors.codigoTitular}
+              label="Código Titular"
+              placeholder="Código"
+              register={register("codigoTitular")}
+              type="text"
+            />
+
+            <Input
+              error={errors.sexo}
+              label="Sexo"
+              placeholder="Sexo"
+              register={register("sexo")}
+              type="text"
+            />
+
+            <Input
+              error={errors.fechaIngresoRamo}
+              label="Fecha Ingreso Ramo"
+              placeholder="Fecha"
+              register={register("fechaIngresoRamo")}
+              type="text"
+            />
+
+            <Input
+              error={errors.fechaInclusion}
+              label="Fecha Inclusión"
+              placeholder="Fecha"
+              register={register("fechaInclusion")}
+              type="text"
+            />
+
+            <Input
+              error={errors.año}
+              label="Año"
+              placeholder="Año"
+              register={register("año")}
+              type="number"
+            />
+
+            <Input
+              error={errors.area}
+              label="Área"
+              placeholder="Área"
+              register={register("area")}
+              type="text"
+            />
+
+            <Input
+              error={errors.fechaNacimiento}
+              label="Fecha Nacimiento"
+              placeholder="Fecha"
+              register={register("fechaNacimiento")}
+              type="text"
+            />
+
+            <Input
+              error={errors.edadActual}
+              label="Edad Actual"
+              placeholder="Edad"
+              register={register("edadActual")}
+              type="number"
+            />
+
+            <Input
+              error={errors.ciudad}
+              label="Ciudad"
+              placeholder="Ciudad"
+              register={register("ciudad")}
+              type="text"
+            />
+
+            <Input
+              error={errors.peso}
+              label="Peso"
+              placeholder="Peso"
+              register={register("peso")}
+              type="number"
+            />
+
+            <Input
+              error={errors.talla}
+              label="Talla"
+              placeholder="Talla"
+              register={register("talla")}
+              type="number"
+            />
+
+            <Input
+              error={errors.imc}
+              label="IMC"
+              placeholder="IMC"
+              register={register("imc")}
+              type="number"
+            />
+
+            <Input
+              error={errors.pa}
+              label="PA"
+              placeholder="PA"
+              register={register("pa")}
+              type="text"
+            />
+
+            <Input
+              error={errors.saturacion}
+              label="Saturación"
+              placeholder="Saturación"
+              register={register("saturacion")}
+              type="number"
+            />
+
+            <BtnForm msg={select?.id ? "Editar titular" : "Crear titular"} />
+          </FormComponent>
+        </>
+      )}
+    </OutletLayout>
   );
 };
 

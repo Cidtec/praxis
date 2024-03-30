@@ -5,13 +5,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        first: "#fff3da",
-        second:"#7768ae",
-        third:"#e15554",
-        fourth:"#e1bc29",
-        fifth:"#3bb273",
-        sixth:"#7768ae",
-        seventh:"#4d9de0",
+        first: {
+          DEFAULT: "#fff3da",
+        },
+        second: {
+          DEFAULT: "#7768ae",
+          light: "#bfb8d9",
+        },
+        third: {
+          DEFAULT: "#e15554",
+          light: "#f1afaf",
+        },
+        fourth: {
+          DEFAULT: "#e1bc29",
+          light: "#f1e09d",
+        },
+        fifth: {
+          DEFAULT: "#3bb273",
+          light: "#a3dbbd",
+        },
+        sixth: {
+          DEFAULT: "#7768ae",
+          light: "#bfb8d9",
+        },
+        seventh: {
+          DEFAULT: "#4d9de0",
+          light: "#abd1f0",
+        },
         primary: {
           50: "#eff6ff",
           100: "#dbeafe",
