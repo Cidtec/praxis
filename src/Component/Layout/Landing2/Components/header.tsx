@@ -1,36 +1,10 @@
-import Logo from "../../../../assets/Landing/logo.png";
 import ImgHeader from "../../../../assets/Landing/imgHeader.png";
+import Navbar from "./navbar";
 
 const HeaderComp = () => {
   return (
     <div style={{ height: "100vh" }} className="bg-first grid">
-      <div>
-        <header className="w-full flex items-center justify-around">
-          <div className="flex items-center">
-            <img src={Logo} height={50} width={50} alt="logo" />
-            <h3>MEDULA</h3>
-          </div>
-
-          <div className="flex justify-center gap-12">
-            <p className="bg-third rounded-full px-2 py-1 text-primary-50">
-              Inicio
-            </p>
-            <p className="bg-fourth rounded-full px-2 py-1 text-primary-50">
-              Mis analisis
-            </p>
-            <p className="bg-fifth rounded-full px-2 py-1 text-primary-50">
-              Contactanos
-            </p>
-          </div>
-
-          <div>
-            <p className="bg-sixth rounded-full px-3 py-1 text-primary-50">
-              Registrate
-            </p>
-          </div>
-        </header>
-      </div>
-
+      <Navbar />
       <div>
         <section className="flex items-center justify-between w-full">
           <div className="w-full flex justify-center">
@@ -50,7 +24,9 @@ const HeaderComp = () => {
                 </p>
               </div>
               <div>
-                <button className="bg-third px-2 py-1 text-white rounded-full">Quiero saber mas</button>
+                <button className="bg-third px-2 py-1 text-white rounded-full">
+                  Quiero saber mas
+                </button>
               </div>
             </div>
           </div>
