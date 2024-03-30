@@ -20,6 +20,8 @@ import TableComponent from "../../../Global/components/Table";
 import { schemaCreateExamHemograma } from "./Validations/FormCreateExamHemograma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import OutletLayout from "../../../Layout/OutletLayout";
+import html2pdf from "html2pdf.js";
+
 const emptyExamData: ExamHemogramaDTO = {
   id: "",
   RX: "",
@@ -140,14 +142,30 @@ const ExamenHemograma = () => {
       </>
     );
   }
+
+  const exportPDF = () => {
+    const element = document.getElementById("myTable");
+    const opt = {
+      margin: 0.4,
+      filename: "myfile.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <OutletLayout
       onCreate={() => {
         setSelect(null);
         handleOpenModal();
       }}
+      onReport={() => exportPDF()}
     >
       <TableComponent<ExamHemogramaDTO>
+        idTable="myTable"
         loading={loading}
         columnsTable={columnsTable}
         bodyTableJSX={bodyTableJSX}

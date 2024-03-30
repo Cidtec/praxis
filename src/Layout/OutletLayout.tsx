@@ -6,9 +6,10 @@ import BtnBasic from "../Global/components/BtnBasic";
 interface Props {
   children: React.ReactNode;
   onCreate?: () => void;
+  onReport?: () => void;
 }
 
-const OutletLayout = ({ children, onCreate }: Props) => {
+const OutletLayout = ({ children, onCreate, onReport }: Props) => {
   const { active } = useSidebarContext();
   const titleClasses = ["text-3xl font-bolder"];
   titleClasses.push(active.color.text);
@@ -16,7 +17,10 @@ const OutletLayout = ({ children, onCreate }: Props) => {
     <div className="flex flex-col gap-4 h-full w-full overflow-hidden">
       <div className="flex w-full justify-between">
         <h2 className={titleClasses.join(" ")}>{active.name}</h2>
-        {onCreate && <BtnBasic onClick={onCreate} txt="Crear datos" />}
+        <div className="flex gap-3">
+          {onCreate && <BtnBasic onClick={onCreate} txt="Crear datos" />}
+          {onReport && <BtnBasic onClick={onReport} txt="Generar reporte" />}
+        </div>
       </div>
       {children}
       <Toaster position="top-right" />

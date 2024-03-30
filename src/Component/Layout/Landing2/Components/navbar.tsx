@@ -1,6 +1,12 @@
 import Logo from "../../../../assets/Landing/logo.png";
-
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/login");
+  };
+
   return (
     <div>
       <header className="w-full flex items-center justify-around h-20">
@@ -22,8 +28,11 @@ const Navbar = () => {
         </div>
 
         <div>
-          <p className="bg-sixth rounded-full px-3 py-1 text-primary-50">
-            Registrate
+          <p
+            onClick={handleRedirect}
+            className="bg-sixth rounded-full px-3 py-1 text-primary-50 cursor-pointer"
+          >
+            Inicia sesion
           </p>
         </div>
       </header>

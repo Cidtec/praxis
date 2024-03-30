@@ -8,6 +8,7 @@ interface Props<T> {
   columnsTable: string[];
   handleEdit: (row: T) => void;
   handleDelete: (row: T) => void;
+  idTable?: string;
 }
 const TableComponent = <T,>({
   loading,
@@ -15,6 +16,7 @@ const TableComponent = <T,>({
   columnsTable,
   handleDelete,
   handleEdit,
+  idTable
 }: Props<T>) => {
   const { active } = useSidebarContext();
 
@@ -50,7 +52,7 @@ const TableComponent = <T,>({
       {loading ? (
         <Loader color={active.color.text} />
       ) : (
-        <table className="min-w-full divide-y divide-gray-200">
+        <table id={idTable} className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 sticky top-0">
             <tr className={active.color.bg_light}>
               {columnsTable.map((column, index) => (
