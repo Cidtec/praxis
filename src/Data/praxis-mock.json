@@ -1,0 +1,214 @@
+[
+  {
+    "id": 1,
+    "codigo": 3100015296,
+    "sexo": "Femenino",
+    "fecha_ingreso": "2020-05-09",
+    "fecha_nacimiento": "1992-07-09",
+    "edad": 32,
+    "ciudad": "LA PAZ",
+    "area_trabajo": null,
+    "datos_biometricos": {
+      "peso": null,
+      "talla": null,
+      "imc": null
+    },
+    "signos_vitales": {
+      "pa": null,
+      "temperatura": null,
+      "saturacion": null
+    },
+    "habitos": {
+      "fuma": null,
+      "covid": null,
+      "bebidas_alcoholicas": null,
+      "deporte": null
+    },
+    "diagnosticos": {
+      "rx": {
+        "conclusion_1": "CARDIOPULMONAR NORMAL.",
+        "conclusion_2": "DISCRETA ESCOLIOSIS DORSAL LEVOCONVEXA"
+      },
+      "electrocardiograma": {
+        "hr": "[bpm] 90",
+        "pr_intervalo": "[ms] 155",
+        "p_duracion": "[ms] 120",
+        "qrs_duracion": "[ms] 105",
+        "t_duracion": "[ms] 181",
+        "qt_qtc_qtcfri": "[ms] 344/421/393",
+        "p_qrs_taxis": "[deg] 77.1/-167.9/54.8",
+        "rv5_sub_sv1": "[mV] 0.54/0.21",
+        "rv5_x_sv1": "[mV] 0.54/0.21",
+        "ant_patogenos": "NO",
+        "diagnostico": "Trazado normal"
+      },
+      "pap": {
+        "celulas_observadas": {
+          "escamosas": "SI",
+          "glandulares": "SI",
+          "metaplasia": "NO"
+        },
+        "calidad_de_muestra": "Satisfactoria para evaluación",
+        "clasificacion_general": "Negativo para Lesión Intraepitelial o Malignidad",
+        "resultados": "Negativo para Lesión Intraepitelial o Malignidad",
+        "flora": "SI"
+      },
+      "hemograma": {
+        "globulos_rojos": 5050000,
+        "globulos_blancos": 5100,
+        "hemoglobina": 15.6,
+        "hematocito": 44,
+        "vcm": 88,
+        "hbcm": 30.9,
+        "m": 35.1,
+        "neutrofilos_segmentados": 60,
+        "eosinofilos": 1,
+        "linfositos": 32,
+        "monocitos": 7,
+        "plaquetas": 279000
+      },
+      "quimicas": {
+        "glicemia": 75,
+        "urea": 42,
+        "creatinina": 1.3,
+        "colesterol": 185,
+        "trigliceridos": 118
+      },
+      "marcador_tumoral": 0,
+      "orina": {
+        "olor": "FETIDO",
+        "color": "AMARILLO",
+        "aspecto": "LIG. OPALECENTE",
+        "densidad": 1020,
+        "ph": 6,
+        "proteinas": "NO CONTIENE",
+        "cuerpos_cetonicos": "NO CONTIENE",
+        "sales_biliares": "NO CONTIENE",
+        "hemoglobina": "NO CONTIENE",
+        "nitritos": "NO CONTIENE",
+        "urobilina": 0.2,
+        "glucosa": "NO CONTIENE",
+        "bilirrubinas": "NO CONTIENE",
+        "leucocitos": "0-2 P/CAMPO",
+        "hematies": "NO CONTIENE",
+        "celulas_descamadas": "ESCASA CANTIDAD",
+        "flora_microbiana": "ESCASA CANTIDAD",
+        "piocitos": "NO CONTIENE",
+        "cristales": "NO CONTIENE",
+        "celulas_renales": "NO CONTIENE"
+      },
+      "antecedentes": {
+        "familiares": "NO REFIERE",
+        "patologicos": "LEGRADO HACE Q MES",
+        "traumatologicos": "NO REFIERE",
+        "laboral": "NO REFIERE"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "codigo": 3100015480,
+    "sexo": "Masculino",
+    "fecha_ingreso": "2020-05-09",
+    "fecha_nacimiento": "1988-09-30",
+    "edad": 35,
+    "ciudad": "LA PAZ",
+    "area_trabajo": "ATENCIÓN AL CLIENTE",
+    "datos_biometricos": {
+      "peso": 75,
+      "talla": 166,
+      "imc": 27
+    },
+    "signos_vitales": {
+      "pa": "110/70",
+      "temperatura": 36.4,
+      "saturacion": 95
+    },
+    "habitos": {
+      "fuma": "NO",
+      "covid": "SI",
+      "bebidas_alcoholicas": "SI",
+      "deporte": "SI"
+    },
+    "diagnosticos": {
+      "rx": {
+        "conclusion_1": "CARDIOPULMONAR NORMAL.",
+        "conclusion_2": "DISCRETA ESCOLIOSIS DORSAL LEVOCONVEXA"
+      },
+      "electrocardiograma": {
+        "hr": "[bpm] 90",
+        "pr_intervalo": "[ms] 155",
+        "p_duracion": "[ms] 120",
+        "qrs_duracion": "[ms] 105",
+        "t_duracion": "[ms] 181",
+        "qt_qtc_qtcfri": "[ms] 344/421/393",
+        "p_qrs_taxis": "[deg] 77.1/-167.9/54.8",
+        "rv5_sub_sv1": "[mV] 0.54/0.21",
+        "rv5_x_sv1": "[mV] 0.54/0.21",
+        "ant_patogenos": "NO",
+        "diagnostico": "Trazado normal"
+      },
+      "pap": {
+        "celulas_observadas": {
+          "escamosas": null,
+          "glandulares": null,
+          "metaplasia": null
+        },
+        "calidad_de_muestra": null,
+        "clasificacion_general": null,
+        "resultados": null,
+        "flora": null
+      },
+      "hemograma": {
+        "globulos_rojos": 5050000,
+        "globulos_blancos": 5100,
+        "hemoglobina": 15.6,
+        "hematocito": 44,
+        "vcm": 88,
+        "hbcm": 30.9,
+        "m": 35.1,
+        "neutrofilos_segmentados": 60,
+        "eosinofilos": 1,
+        "linfositos": 32,
+        "monocitos": 7,
+        "plaquetas": 279000
+      },
+      "quimicas": {
+        "glicemia": 75,
+        "urea": 42,
+        "creatinina": 1.3,
+        "colesterol": 185,
+        "trigliceridos": 118
+      },
+      "marcador_tumoral": 0.32,
+      "orina": {
+        "olor": "FETIDO",
+        "color": "AMARILLO",
+        "aspecto": "LIG. OPALECENTE",
+        "densidad": 1020,
+        "ph": 6,
+        "proteinas": "NO CONTIENE",
+        "cuerpos_cetonicos": "NO CONTIENE",
+        "sales_biliares": "NO CONTIENE",
+        "hemoglobina": "NO CONTIENE",
+        "nitritos": "NO CONTIENE",
+        "urobilina": 0.2,
+        "glucosa": "NO CONTIENE",
+        "bilirrubinas": "NO CONTIENE",
+        "leucocitos": "0-2 P/CAMPO",
+        "hematies": "NO CONTIENE",
+        "celulas_descamadas": "ESCASA CANTIDAD",
+        "flora_microbiana": "ESCASA CANTIDAD",
+        "piocitos": "NO CONTIENE",
+        "cristales": "NO CONTIENE",
+        "celulas_renales": "NO CONTIENE"
+      },
+      "antecedentes": {
+        "familiares": "NO REFIERE",
+        "patologicos": "LEGRADO HACE Q MES",
+        "traumatologicos": "NO REFIERE",
+        "laboral": "NO REFIERE"
+      }
+    }
+  }
+]
