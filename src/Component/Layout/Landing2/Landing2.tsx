@@ -1,7 +1,7 @@
 import AboutUs from "./Components/AboutUs";
 import Types from "./Components/Types";
 import HeaderComp from "./Components/header";
-import DataJson from "../../../Data/praxis-mock.json";
+import DataJson from "../../../Data/praxis-mock2.json";
 import {
   BarChart,
   Bar,
