@@ -431,7 +431,7 @@ const Landing = () => {
           </div>
         </div>
 
-        <div>
+     {/*    <div>
           <h1 className="text-3xl text-center">Hemograma</h1>
           <div className="flex justify-center items-center gap-3">
             <div style={{ width: "300px", height: 200 }}>
@@ -454,7 +454,7 @@ const Landing = () => {
             </div>
           </div>
         </div>
-
+ */}
       </div>
 
 
