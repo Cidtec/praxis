@@ -19,7 +19,7 @@ const PieGrafic = ({title, data}: Props) => {
 
   return (
     <div>
-      <h2>{title}</h2>
+      <h2 className="text-2xl text-center">{title}</h2>
       <div style={{ width: "200px", height: 200 }}>
         <ResponsiveContainer>
           <PieChart>

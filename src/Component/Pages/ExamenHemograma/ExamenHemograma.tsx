@@ -20,7 +20,7 @@ import TableComponent from "../../../Global/components/Table";
 import { schemaCreateExamHemograma } from "./Validations/FormCreateExamHemograma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import OutletLayout from "../../../Layout/OutletLayout";
-import html2pdf from "html2pdf.js";
+
 
 const emptyExamData: ExamHemogramaDTO = {
   id: "",
@@ -153,7 +153,7 @@ const ExamenHemograma = () => {
       jsPDF: { unit: 'in', format: 'a3', orientation: 'landscape' },
     };
 
-    html2pdf().set(opt).from(element).save();
+  //  html2pdf().set(opt).from(element).save();
   };
 
   return (

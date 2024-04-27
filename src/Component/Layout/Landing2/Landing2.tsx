@@ -14,6 +14,8 @@ import {
   Pie,
   ResponsiveContainer,
   Cell,
+  LineChart,
+  Line,
 } from "recharts";
 import { DataType } from "../../../Global/Types/dataType";
 import { useEffect, useState } from "react";
@@ -135,6 +137,63 @@ const Landing = () => {
     },
   ]);
 
+  //? Signos vitales
+  //* Temperature
+  const [dataTemperature, setDataTemperature] = useState([{
+    name: "36-36.9",
+    value: 0
+  }, {
+    name: "37-37.9",
+    value: 0
+  }, {
+    name: "38-38.9",
+    value: 0
+  }, {
+    name: "39-39.9",
+    value: 0
+  }, {
+    name: "40-40.9",
+    value: 0
+  }])
+
+  //* Saturation
+  const [dataSaturation, setDataSaturation] = useState([{
+    name: "85-87",
+    value: 0
+  }, {
+    name: "88-90",
+    value: 0
+  }, {
+    name: "91-93",
+    value: 0
+  }, {
+    name: "94-96",
+    value: 0
+  }, {
+    name: "97-100",
+    value: 0
+  }])
+
+  //? habits
+  //* smoke
+  const [dataSmoke, setDataSmoke] = useState([
+    { name: 'Si', value: 0 },
+    { name: 'No', value: 0 },
+  ]);
+
+  //* covid
+  const [dataCovid, setDataCovid] = useState([
+    { name: 'Si', value: 0 },
+    { name: 'No', value: 0 },
+  ]);
+
+  //* Alcohol
+  const [dataAlcohol, setDataAlcohol] = useState([
+    { name: 'Si', value: 0 },
+    { name: 'No', value: 0 },
+  ]);
+
+
   const handleLoadData = () => {
     //* age
     dataAge.map((age) => {
@@ -145,10 +204,10 @@ const Landing = () => {
       ).length;
       return age;
     });
- 
+
 
     //* cityes
-     dataCities.map((city) => {
+    dataCities.map((city) => {
       city.value = data.filter(
         (v) => v.ciudad.toLowerCase() === city.name.toLowerCase()
       ).length;
@@ -158,7 +217,7 @@ const Landing = () => {
 
     //? biometric data
     //* weight
-   dataWeight.map((weight) => {
+    dataWeight.map((weight) => {
       weight.value = data.filter(
         (v) =>
           v.datos_biometricos.peso >= parseInt(weight.name.split("-")[0]) &&
@@ -175,6 +234,45 @@ const Landing = () => {
       ).length;
       return height;
     });
+
+    //* temperature
+    dataTemperature.map((temperature) => {
+      temperature.value = data.filter(
+        (v) =>
+          v.signos_vitales.temperatura >= parseFloat(temperature.name.split("-")[0]) &&
+          v.signos_vitales.temperatura <= parseFloat(temperature.name.split("-")[1])
+      ).length;
+      return temperature;
+    });
+
+    //* saturation
+    dataSaturation.map((saturation) => {
+      saturation.value = data.filter(
+        (v) =>
+          v.signos_vitales.saturacion >= parseFloat(saturation.name.split("-")[0]) &&
+          v.signos_vitales.saturacion <= parseFloat(saturation.name.split("-")[1])
+      ).length;
+      return saturation;
+    });
+
+    //* smoke
+    dataSmoke.map(() => {
+      dataSmoke[0].value = data.filter(v => v.habitos.fuma == "SI").length;
+      dataSmoke[1].value = data.filter(v => v.habitos.fuma == "NO").length;
+    })
+
+    //* covid
+    dataCovid.map(() => {
+      dataCovid[0].value = data.filter(v => v.habitos.covid == "SI").length;
+      dataCovid[1].value = data.filter(v => v.habitos.covid == "NO").length;
+    })
+
+    //* alcohol
+    dataAlcohol.map(() => {
+      dataAlcohol[0].value = data.filter(v => v.habitos.bebidas_alcoholicas == "SI").length;
+      dataAlcohol[1].value = data.filter(v => v.habitos.bebidas_alcoholicas == "NO").length;
+    })
+
   };
 
   useEffect(() => {
@@ -194,30 +292,126 @@ const Landing = () => {
     <div className="bg-first">
       <HeaderComp />
       <AboutUs />
-      <Types />
+      {/*    <Types /> */}
 
-      {/* Gender Chart */}
-      <BarChart width={500} height={300} data={genderChartData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="value" fill="#8884d8" />
-      </BarChart>
+      <div className="flex flex-col gap-3">
 
-      {/* Age Chart */}
-      <PieGrafic data={dataAge} title="Edades" />
-      <PieGrafic data={dataCities} title="Ciudades" />
+        <div>
+          <h1 className="text-3xl text-center">Datos generales</h1>
+          <div className="flex justify-center items-center gap-3">
 
-      <div>
-        <h1>Datos biometricos</h1>
-        <div className="flex gap-1">
-          <PieGrafic data={dataWeight} title="Peso" />
-          <PieGrafic data={dataHeight} title="Talla" />
-          <PieGrafic data={dataAge} title="Edades" />
+            {/* Age Chart */}
+            <PieGrafic data={dataAge} title="Edades" />
+            {/* Gender Chart */}
+            <div>
+              <h2 className="text-2xl text-center">Generos</h2>
+              <BarChart width={500} height={300} data={genderChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </div>
+            {/* City Chart */}
+            <PieGrafic data={dataCities} title="Ciudades" />
+          </div>
         </div>
+
+
+        <div>
+          <h1 className="text-3xl text-center">Datos biometricos</h1>
+          <div className="flex justify-center items-center gap-3">
+            <PieGrafic data={dataWeight} title="Peso" />
+            <PieGrafic data={dataHeight} title="Talla" />
+            <PieGrafic data={dataAge} title="Edades" />
+          </div>
+        </div>
+
+
+        <div>
+          <h1 className="text-3xl text-center">Signos vitales</h1>
+          <div className="flex justify-center items-center gap-3">
+            <PieGrafic data={dataTemperature} title="Temperatura" />
+            <PieGrafic data={dataSaturation} title="Saturacion" />
+          </div>
+        </div>
+
+        <div>
+          <h1 className="text-3xl text-center">Habitos</h1>
+
+          <div className="flex justify-center items-center gap-3">
+            <div style={{ width: "300px", height: 200 }}>
+              <h2 className="text-2xl text-center">Fuma</h2>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart width={400} height={400}>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={dataSmoke}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Pie dataKey="value" data={dataSmoke} cx={500} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+
+            <div style={{ width: "300px", height: 200 }}>
+              <h2 className="text-2xl text-center">Covid</h2>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart width={400} height={400}>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={dataCovid}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Pie dataKey="value" data={dataCovid} cx={500} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+            
+            <div style={{ width: "300px", height: 200 }}>
+              <h2 className="text-2xl text-center">Alcohol</h2>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart width={400} height={400}>
+                  <Pie
+                    dataKey="value"
+                    isAnimationActive={false}
+                    data={dataAlcohol}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Pie dataKey="value" data={dataAlcohol} cx={500} cy={200} innerRadius={40} outerRadius={80} fill="#82ca9d" />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+
+
+          </div>
+        </div>
+
       </div>
+
+
+
     </div>
   );
 };
