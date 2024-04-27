@@ -16,6 +16,9 @@ import {
   Cell,
   LineChart,
   Line,
+  ScatterChart,
+  Scatter,
+  LabelList,
 } from "recharts";
 import { DataType } from "../../../Global/Types/dataType";
 import { useEffect, useState } from "react";
@@ -193,6 +196,24 @@ const Landing = () => {
     { name: 'No', value: 0 },
   ]);
 
+  //? Hemograma
+  //* Linfositos
+  /*   const data123 = [
+      { x: 20, y: 44, z: 32 },
+      { x: 20, y: 44, z: 38 },
+      { x: 20, y: 44, z: 41 },
+    ];
+   */
+  const data123 = [
+    {
+      max: 20,
+      min: 44,
+      percentage: 32,
+    },
+    // more data points...
+  ];
+
+
 
   const handleLoadData = () => {
     //* age
@@ -273,6 +294,10 @@ const Landing = () => {
       dataAlcohol[1].value = data.filter(v => v.habitos.bebidas_alcoholicas == "NO").length;
     })
 
+    //* hemograma
+
+
+
   };
 
   useEffect(() => {
@@ -281,12 +306,10 @@ const Landing = () => {
     seLoading(false);
   }, []);
 
-  // Education data
-  /*  const educationData = data.reduce((acc, curr) => {
-    acc[curr.education] = (acc[curr.education] || 0) + 1;
-    return acc;
-  }, {});
-  const educationChartData = Object.keys(educationData).map(key => ({ name: key, value: educationData[key] })); */
+  const chartData = data123.map((item) => ({
+    name: item.max.toString(),
+    value: item.percentage,
+  }));
 
   return (
     <div className="bg-first">
@@ -383,7 +406,7 @@ const Landing = () => {
               </ResponsiveContainer>
             </div>
 
-            
+
             <div style={{ width: "300px", height: 200 }}>
               <h2 className="text-2xl text-center">Alcohol</h2>
               <ResponsiveContainer width="100%" height="100%">
@@ -405,6 +428,30 @@ const Landing = () => {
             </div>
 
 
+          </div>
+        </div>
+
+        <div>
+          <h1 className="text-3xl text-center">Hemograma</h1>
+          <div className="flex justify-center items-center gap-3">
+            <div style={{ width: "300px", height: 200 }}>
+              <h2 className="text-2xl text-center">Linfositos</h2>
+              <BarChart
+                width={500}
+                height={300}
+                data={chartData}
+                margin={{
+                  top: 5, right: 30, left: 20, bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#8884d8" />
+              </BarChart>
+            </div>
           </div>
         </div>
 
