@@ -24,8 +24,8 @@ import { DataType } from "../../../Global/Types/dataType";
 import { useEffect, useState } from "react";
 import PieGrafic from "./Components/PieGrafic";
 import { PropsPieGraficType } from "./Types/propsPieGrafic";
-import { diagnostic_rx } from "../../../Data/diagnostic_rx";
-import { diagnostic_smoke } from "../../../Data/smoke";
+import { diagnostic_rx } from "../../../Data/general/diagnostic_rx";
+import { diagnostic_smoke } from "../../../Data/general/smoke";
 import { diagnostic_hemogram_gr } from "../../../Data/hemograma/gr";
 import Cartesian from "./Components/Cartesian";
 import { diagnostic_hemogram_gb } from "../../../Data/hemograma/gb";
@@ -38,6 +38,8 @@ import { diagnostic_hemogram_neutrofilos_segmentados } from "../../../Data/hemog
 import { diagnostic_hemogram_eosinofilos } from "../../../Data/hemograma/eosinofilos";
 import { diagnostic_hemogram_linfositos } from "../../../Data/hemograma/linfositos";
 import { diagnostic_hemogram_monocitos } from "../../../Data/hemograma/monocitos";
+import { diagnostic_age } from "../../../Data/general/age";
+import { diagnostic_weight } from "../../../Data/general/weight";
 
 type acc = { [key: string]: number };
 
@@ -67,7 +69,7 @@ const Landing = () => {
   }));
 
   //* Age data
-  const [dataAge, setDataAge] = useState<PropsPieGraficType[]>([
+  /*   const [dataAge, setDataAge] = useState<PropsPieGraficType[]>([
     { name: "11-17", value: 0 },
     { name: "18-24", value: 0 },
     { name: "25-34", value: 0 },
@@ -78,7 +80,7 @@ const Landing = () => {
     { name: "75-84", value: 0 },
     { name: "85-94", value: 0 },
     { name: "95-104", value: 0 },
-  ]);
+  ]); */
 
   //* cityes
   const [dataCities, setDataCities] = useState([
@@ -236,14 +238,14 @@ const Landing = () => {
 
   const handleLoadData = () => {
     //* age
-    dataAge.map((age) => {
+    /*     dataAge.map((age) => {
       age.value = data.filter(
         (v) =>
           v.edad >= parseInt(age.name.split("-")[0]) &&
           v.edad <= parseInt(age.name.split("-")[1])
       ).length;
       return age;
-    });
+    }); */
 
     //* cityes
     dataCities.map((city) => {
@@ -318,7 +320,6 @@ const Landing = () => {
 
   useEffect(() => {
     handleLoadData();
-
     seLoading(false);
   }, []);
 
@@ -335,7 +336,7 @@ const Landing = () => {
               <h1 className="text-3xl text-center">Datos generales</h1>
               <div className="flex justify-center items-center gap-3">
                 {/* Age Chart */}
-                <PieGrafic data={dataAge} title="Edades" />
+                <PieGrafic data={diagnostic_age} title="Edades" />
                 {/* Gender Chart */}
                 <div>
                   <h2 className="text-2xl text-center">Generos</h2>
@@ -356,9 +357,9 @@ const Landing = () => {
             <div>
               <h1 className="text-3xl text-center">Datos biometricos</h1>
               <div className="flex justify-center items-center gap-3">
-                <PieGrafic data={dataWeight} title="Peso" />
+                <PieGrafic data={diagnostic_weight} title="Peso" />
                 <PieGrafic data={dataHeight} title="Talla" />
-                <PieGrafic data={dataAge} title="Edades" />
+                <PieGrafic data={diagnostic_age} title="Edades" />
               </div>
             </div>
 
@@ -493,8 +494,6 @@ const Landing = () => {
                 />
               </div>
 
-
-
               <div className="flex justify-center items-center gap-3">
                 <Cartesian
                   data={diagnostic_hemogram_eosinofilos}
@@ -509,9 +508,6 @@ const Landing = () => {
                   title="Monocitos"
                 />
               </div>
-
-
-
             </div>
           </div>
         </div>

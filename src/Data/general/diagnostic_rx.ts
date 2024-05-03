@@ -1,6 +1,6 @@
-import { DataTypeGrafic } from "../Component/Layout/Landing2/Landing2";
-import { DataType } from "../Global/Types/dataType";
-import DataJson from "./praxis-mock2.json";
+import { DataTypeGrafic } from "../../Component/Layout/Landing2/Landing2";
+import { DataType } from "../../Global/Types/dataType";
+import DataJson from "../praxis-mock2.json";
 
 //@ts-ignore
 const data: DataType[] = DataJson;
